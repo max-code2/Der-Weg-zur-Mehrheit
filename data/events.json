@@ -1,0 +1,92 @@
+[
+    {
+        "id": "digital_lag",
+        "title": "Digitaler Rückstand",
+        "description": "Die deutsche Bürokratie setzt noch immer auf Papier und Faxgeräte. Bürger und Wirtschaft fordern eine sofortige Digitalisierung der öffentlichen Dienste.",
+        "category": "Technology"
+    },
+    {
+        "id": "pension_crisis",
+        "title": "Rentenkrise",
+        "description": "Die alternde Bevölkerung gefährdet die Stabilität des Rentensystems. Die Kosten für die soziale Sicherung steigen rasant an.",
+        "category": "Social"
+    },
+    {
+        "id": "db_collapse",
+        "title": "Bahn-Kollaps (Deutsche Bahn)",
+        "description": "Zugverspätungen haben aufgrund der maroden Infrastruktur ein kritisches Niveau erreicht. Die Wirtschaft erleidet Schäden.",
+        "category": "Infrastructure"
+    },
+    {
+        "id": "food_inflation",
+        "title": "Lebensmittel-Inflation",
+        "description": "Die Preise für Grundnahrungsmittel sind um 20% gestiegen. Die Bevölkerung fordert ein Eingreifen der Regierung.",
+        "category": "Economy"
+    },
+    {
+        "id": "labor_shortage",
+        "title": "Fachkräftemangel",
+        "description": "Die Industrie findet keine Mitarbeiter mehr. Viele Unternehmen erwägen eine Abwanderung der Produktion ins Ausland.",
+        "category": "Economy"
+    },
+    {
+        "id": "housing_shortage",
+        "title": "Wohnungskrise",
+        "description": "In Großstädten ist es unmöglich, bezahlbaren Wohnraum zu finden. Familien protestieren gegen hohe Mieten.",
+        "category": "Social"
+    },
+    {
+        "id": "energy_transition",
+        "title": "Kosten der Energiewende",
+        "description": "Der Kohleausstieg und der Umstieg auf grüne Energie erfordern Billionen-Investitionen, was die Preise belastet.",
+        "category": "Environment"
+    },
+    {
+        "id": "military_spending",
+        "title": "Verteidigungshaushalt (Zeitenwende)",
+        "description": "Die Notwendigkeit der Aufrüstung der Bundeswehr steht im Konflikt mit Forderungen nach Bildung und Medizin.",
+        "category": "Security"
+    },
+    {
+        "id": "cyber_attack",
+        "title": "Massiver Cyberangriff",
+        "description": "Hacker haben mehrere Ministerien und kritische Infrastrukturen lahmgelegt. Daten von Millionen Bürgern sind bedroht.",
+        "category": "Security"
+    },
+    {
+        "id": "strike_wave",
+        "title": "Streikwelle",
+        "description": "Gewerkschaften fordern 15% mehr Lohn und eine 35-Stunden-Woche. Das Land steht still.",
+        "category": "Social"
+    },
+    {
+        "id": "education_reform_crisis",
+        "title": "Bildungskrise",
+        "description": "Deutsche Schüler erzielen die schlechtesten Ergebnisse bei PISA. Die Niveaus in Lesen und Mathe sinken rasant.",
+        "category": "Social"
+    },
+    {
+        "id": "healthcare_strain",
+        "title": "Überlastung der Krankenhäuser",
+        "description": "Pflegemangel und Klinikschließungen in Regionen sorgen für Panik in der Bevölkerung.",
+        "category": "Social"
+    },
+    {
+        "id": "water_scarcity",
+        "title": "Wassermangel",
+        "description": "Ein trockener Sommer hat den Rheinpegel sinken lassen. Die Schifffahrt ist eingeschränkt, Ernten bedroht.",
+        "category": "Environment"
+    },
+    {
+        "id": "demography_shift",
+        "title": "Demografischer Wandel",
+        "description": "Das Rentensystem steht vor dem Kollaps. Es gibt zu wenige junge Beitragszahler für immer mehr Rentner.",
+        "category": "Social"
+    },
+    {
+        "id": "bureaucracy_maze",
+        "title": "Bürokratie-Wahnsinn",
+        "description": "Überbordende Verwaltung und langsame Prozesse ersticken die Wirtschaft. Unternehmen klagen über zu viel Papierkram.",
+        "category": "Economy"
+    }
+]

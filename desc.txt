@@ -2,7 +2,7 @@
 
 ## 1. Spielregeln (Spielablauf)
 
-Der Weg zur Mehrheit ist ein rundenbasiertes Strategiespiel, bei dem zwei Teams (Koalition und Opposition) um die Gunst der Wähler in Deutschland kämpfen.
+Der Weg zur Mehrheit ist ein rundenbasiertes politisches Strategiespiel, bei dem zwei Teams (Koalition und Opposition) um die Gunst der Wähler in Deutschland kämpfen.
 
 ### Rollen und Start
 * **Wahlkampf**: Zu Beginn schreiben beide Teams eine Wahlkampagne. Eine KI (OpenAI) bewertet diese Kampagnen und verteilt die ersten 100% der Stimmen.

@@ -3,13 +3,14 @@ import os
 import json
 import random
 from dotenv import load_dotenv
+import streamlit as st
 
 env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env")
 load_dotenv(dotenv_path=env_path, override=True)
 
 class AIConsultant:
     def __init__(self, api_key=None):
-        self.api_key = api_key or os.getenv("OPENAI_API_KEY")
+        self.api_key = st.secrets.get("OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY")
         if self.api_key:
             openai.api_key = self.api_key
 

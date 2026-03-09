@@ -9,13 +9,17 @@ env_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__
 load_dotenv(dotenv_path=env_path, override=True)
 
 class AIConsultant:
-    def __init__(self, api_key=None):
-        self.api_key = st.secrets.get("OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY")
+    def __init__(self):
+        try:
+            self.api_key = st.secrets["OPENAI_API_KEY"]
+        except (KeyError, FileNotFoundError, AttributeError):
+            self.api_key = os.getenv("OPENAI_API_KEY")
+        
         if self.api_key:
             openai.api_key = self.api_key
 
     def evaluate_campaigns(self, text1, text2):
-        if not self.api_key or self.api_key == "None":
+        if not self.api_key:
             r1 = random.randint(40, 60)
             return {
                 "status": "success",

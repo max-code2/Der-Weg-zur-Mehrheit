@@ -112,17 +112,10 @@ class GameState:
 
     def handle_no_laws(self):
         report = {"effects": []}
-        c = self.ratings["coalition"]
-        o = self.ratings["opposition"]
+        c, o = self.ratings["coalition"], self.ratings["opposition"]
         
-        apply_penalty = False
-        if c > o:
-            apply_penalty = True
-        elif c < o:
-            if random.random() < 0.5:
-                apply_penalty = True
-        
-        if apply_penalty:
+        # Popularity penalty for inactivity
+        if c > o or random.random() < 0.5:
             self._change_rating(-5)
             report["effects"].append("❌ Keine Gesetze verabschiedet: -5% (Wählerunzufriedenheit)")
         
@@ -143,6 +136,5 @@ class GameState:
         else:
             c_players, o_players = self.team2_players, self.team1_players
             
-        for p in c_players: self.player_weights[p] = c_norm / len(c_players) if c_players else 0
-        for p in o_players: self.player_weights[p] = o_norm / len(o_players) if o_players else 0
-
+        for p in c_players: self.player_weights[p] = round(c_norm / len(c_players), 1) if c_players else 0
+        for p in o_players: self.player_weights[p] = round(o_norm / len(o_players), 1) if o_players else 0

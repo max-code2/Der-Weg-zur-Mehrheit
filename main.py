@@ -210,14 +210,15 @@ def next_round_ui():
         st.session_state.step = "end"
     st.rerun()
 
-if st.session_state.step == "splash":
+
+def render_splash():
     st.markdown('<div style="height: 30vh;"></div>', unsafe_allow_html=True)
     st.markdown('<div class="loader"></div>', unsafe_allow_html=True)
     st.markdown('<h2 style="text-align: center; margin-top: 2rem;">Lade Der Weg zur Mehrheit...</h2>', unsafe_allow_html=True)
     time.sleep(1.2)
     start_game()
 
-elif st.session_state.step == "start":
+def render_start():
     st.markdown('<div class="fade-in"><div class="float-anim"><div class="hero-title">🏛 DER WEG ZUR MEHRHEIT</div></div>', unsafe_allow_html=True)
     st.markdown('<div class="hero-subtitle">MACHT • STRATEGIE • WAHL</div></div>', unsafe_allow_html=True)
     
@@ -241,11 +242,9 @@ elif st.session_state.step == "start":
             if st.button("SPIELEN", use_container_width=True):
                 start_setup()
 
-elif st.session_state.step == "setup":
+def render_setup():
     st.markdown('<h2 style="text-align: center;" class="fade-in">👥 TEAM-EINSTELLUNGEN</h2>', unsafe_allow_html=True)
-    
     col1, col2 = st.columns(2)
-    
     with col1:
         with st.container(border=True):
             st.subheader("Team 1")
@@ -253,7 +252,6 @@ elif st.session_state.step == "setup":
             t1_count = st.number_input("Anzahl der Spieler (T1)", 2, 5, 2, key="t1_count")
             for i in range(t1_count):
                 st.text_input(f"Spieler {i+1}", key=f"t1_p{i}", value=f"Spieler A{i+1}")
-            
     with col2:
         with st.container(border=True):
             st.subheader("Team 2")
@@ -261,38 +259,30 @@ elif st.session_state.step == "setup":
             t2_count = st.number_input("Anzahl der Spieler (T2)", 2, 5, 2, key="t2_count")
             for i in range(t2_count):
                 st.text_input(f"Spieler {i+1}", key=f"t2_p{i}", value=f"Spieler B{i+1}")
-            
     if st.button("WEITER", use_container_width=True):
         start_campaign()
 
-elif st.session_state.step == "campaign":
+def render_campaign():
     st.header("📢 Wahlkampagne")
     st.write("Schreibe eine Kampagne für die Wähler in Deutschland. Die KI bestimmt eure Startstimmen.")
-    
     col1, col2 = st.columns(2)
     with col1:
         with st.container(border=True):
             st.subheader("Kampagne 1")
-            st.text_area("Deine Wahlkampagne...", 
-                         key="player1_campaign", 
-                         height=150,
+            st.text_area("Deine Wahlkampagne...", key="player1_campaign", height=150,
                          placeholder="Beispiel: Wir sichern eine stabile Zukunft durch Digitalisierung und neue Arbeitsplätze...")
     with col2:
         with st.container(border=True):
             st.subheader("Kampagne 2")
-            st.text_area("Deine Wahlkampagne...", 
-                         key="player2_campaign", 
-                         height=150,
+            st.text_area("Deine Wahlkampagne...", key="player2_campaign", height=150,
                          placeholder="Beispiel: Unsere Priorität ist soziale Gerechtigkeit und die Unterstützung der Rentner...")
-        
     if st.button("ZUR BEWERTUNG SENDEN", use_container_width=True):
         submit_campaign()
 
-elif st.session_state.step == "roles_display":
+def render_roles_display():
     st.header("📊 Wahlergebnisse")
     game = st.session_state.game
     res = st.session_state.ai_results
-    
     col1, col2 = st.columns(2)
     with col1:
         with st.container(border=True):
@@ -302,7 +292,6 @@ elif st.session_state.step == "roles_display":
         with st.container(border=True):
             st.metric("Team 2", f"{res['party2']['rating']}%")
             st.write(f"_{res['party2']['feedback']}_")
-        
     st.divider()
     st.subheader("🗳 Stimmgewicht der Spieler")
     cols = st.columns(len(game.player_weights))
@@ -311,15 +300,13 @@ elif st.session_state.step == "roles_display":
         color = game.team1_color if is_t1 else game.team2_color
         with cols[i]:
             st.markdown(f'<div style="text-align: center;" class="fade-in">{colored_name(name, color)}<br><b>{weight:.1f}%</b></div>', unsafe_allow_html=True)
-
     if st.button("ZUR ERSTEN RUNDE", use_container_width=True):
         next_round_ui()
 
-elif st.session_state.step == "round":
+def render_round():
     game = st.session_state.game
     st.markdown(f'<h2 style="text-align: center;">🛡 Runde {game.current_round}: {game.current_event["title"]}</h2>', unsafe_allow_html=True)
     st.warning(game.current_event['description'])
-    
     st.divider()
     st.subheader("📝 Abstimmung über Gesetze")
     
@@ -337,7 +324,6 @@ elif st.session_state.step == "round":
                     key=f"vote_{law['id']}_{p_name}_{game.current_round}",
                     help=f"Stimmgewicht: {game.player_weights[p_name]:.1f}%"
                 )
-                cols[i].markdown(f'<div style="text-align: center; color: {p_color}; font-size: 0.8em;">{game.player_weights[p_name]:.1f}%</div>', unsafe_allow_html=True)
 
     st.divider()
     if st.button("ERGEBNISSE BERECHNEN", use_container_width=True):
@@ -349,50 +335,43 @@ elif st.session_state.step == "round":
         st.session_state.step = "veto_screen"
         st.rerun()
 
-elif st.session_state.step == "veto_screen":
+def render_veto_screen():
     game = st.session_state.game
     st.header("🛡 Veto-Phase")
     with st.container(border=True):
         st.write(f"Koalition: **{game.coalition_party}**")
-    
     passed_titles = [l["title"] for l in st.session_state.passed_this_round]
     
     if not game.veto_used and passed_titles:
         st.write("Der Kanzler kann ein Gesetz annullieren.")
         veto_law = st.selectbox("Wähle ein Gesetz für das Veto", ["Nicht verwenden"] + passed_titles)
         if st.button("RUNDE BEENDEN", use_container_width=True):
-            final_laws = st.session_state.passed_this_round
-            if veto_law != "Nicht verwenden":
-                final_laws = [l for l in final_laws if l["title"] != veto_law]
-                game.veto_used = True
-            
-            if "round_reports" not in st.session_state:
-                st.session_state.round_reports = []
-            if not final_laws:
-                st.session_state.round_reports.append(game.handle_no_laws())
-            else:
-                for l in final_laws:
-                    st.session_state.round_reports.append(game.apply_law(l["id"]))
-            
-            game.current_round += 1
-            st.session_state.step = "round_feedback"
-            st.rerun()
+            finish_veto(veto_law)
     else:
         st.info("Veto nicht verfügbar oder keine Gesetze verabschiedet.")
         if st.button("WEITER", use_container_width=True):
-            final_laws = st.session_state.passed_this_round
-            if "round_reports" not in st.session_state:
-                st.session_state.round_reports = []
-            if not final_laws:
-                st.session_state.round_reports.append(game.handle_no_laws())
-            else:
-                for l in final_laws:
-                    st.session_state.round_reports.append(game.apply_law(l["id"]))
-            game.current_round += 1
-            st.session_state.step = "round_feedback"
-            st.rerun()
+            finish_veto("Nicht verwenden")
 
-elif st.session_state.step == "round_feedback":
+def finish_veto(veto_law):
+    game = st.session_state.game
+    final_laws = st.session_state.passed_this_round
+    if veto_law != "Nicht verwenden":
+        final_laws = [l for l in final_laws if l["title"] != veto_law]
+        game.veto_used = True
+    
+    if "round_reports" not in st.session_state:
+        st.session_state.round_reports = []
+    if not final_laws:
+        st.session_state.round_reports.append(game.handle_no_laws())
+    else:
+        for l in final_laws:
+            st.session_state.round_reports.append(game.apply_law(l["id"]))
+    
+    game.current_round += 1
+    st.session_state.step = "round_feedback"
+    st.rerun()
+
+def render_round_feedback():
     st.header("📈 Rating-Dynamik")
     game = st.session_state.game
     
@@ -419,7 +398,7 @@ elif st.session_state.step == "round_feedback":
     if st.button(btn_text, use_container_width=True):
         next_round_ui()
 
-elif st.session_state.step == "end":
+def render_end():
     st.markdown('<div class="hero-title fade-in">🏁 SPIEL BEENDET</div>', unsafe_allow_html=True)
     game = st.session_state.game
     
@@ -440,3 +419,20 @@ elif st.session_state.step == "end":
     if st.button("NOCHMAL SPIELEN", use_container_width=True):
         st.session_state.clear()
         st.rerun()
+
+SCREENS = {
+    "splash": render_splash,
+    "start": render_start,
+    "setup": render_setup,
+    "campaign": render_campaign,
+    "roles_display": render_roles_display,
+    "round": render_round,
+    "veto_screen": render_veto_screen,
+    "round_feedback": render_round_feedback,
+    "end": render_end
+}
+
+if st.session_state.step in SCREENS:
+    SCREENS[st.session_state.step]()
+else:
+    st.error("Unbekannter Spielzustand.")

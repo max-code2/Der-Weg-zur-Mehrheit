@@ -1,46 +1,21 @@
-# Der Weg zur Mehrheit - Spielbeschreibung und Technische Struktur
 
-## 1. Spielregeln (Spielablauf)
 
-Der Weg zur Mehrheit ist ein rundenbasiertes politisches Strategiespiel, bei dem zwei Teams (Koalition und Opposition) um die Gunst der Wähler in Deutschland kämpfen.
-
-### Rollen und Start
-* **Wahlkampf**: Zu Beginn schreiben beide Teams eine Wahlkampagne. Eine KI (OpenAI) bewertet diese Kampagnen und verteilt die ersten 100% der Stimmen.
-* **Koalition & Opposition**: Die Partei mit mehr als 50% der Stimmen wird zur Koalition, die andere zur Opposition.
-* **Stimmgewicht**: Innerhalb der Teams hat jeder Spieler ein Stimmgewicht, das proportional zum aktuellen Gesamtrating der Partei ist.
-
-### Spielrunden
-* Das Spiel dauert standardmäßig 4 Runden.
-* Jede Runde beginnt mit einem politischen **Ereignis** (z.B. Pensionkrise, Infrastrukturprobleme).
-* Zu jedem Ereignis werden 4-5 **Gesetzesentwürfe** vorgeschlagen.
-* Alle Spieler stimmen über diese Gesetze ab. Ein Gesetz wird verabschiedet, wenn es ≥ 50% der gewichteten Stimmen erhält.
-* **Veto-Phase**: Die Koalition kann ein Veto gegen ein verabschiedetes Gesetz einlegen.
-
-### Rating-Dynamik (Zero-Sum)
-* Jedes verabschiedete Gesetz hat Auswirkungen auf das Rating der Koalition (+ oder -).
-* Das System ist ein Nullsummenspiel: Wenn die Koalition gewinnt, verliert die Opposition im gleichen Maße (Gesamt = 100%).
-* **Zusatzfaktoren**:
-    * **Internationale Reaktionen**: Gesetze können zufällige Boni oder Malive durch das Ausland bewirken.
-    * **Skandale**: Es besteht eine Chance auf Korruptionsskandale, die das Rating stark senken.
-    * **Opposition Exploit**: Die Opposition kann Schwachstellen in Gesetzen finden (-4% Impact).
-    * **Untätigkeit**: Wenn keine Gesetze verabschiedet werden, verliert die Koalition an Popularität.
-
-## 2. Technische Struktur
+Technische Struktur
 
 Das Spiel ist modular aufgebaut und nutzt moderne Web-Technologien.
 
-### Komponenten
-* **Frontend**: Entwickelt mit **Streamlit** (Python). Bietet eine interaktive, webbasierte Benutzeroberfläche mit Custom CSS (Glassmorphism, Animationen).
-* **Game Logic (`game/state.py`)**: Verwaltet den Spielzustand, die Ratings, Spieler und Rundenfortschritte. Implementiert das Zero-Sum-System.
-* **AI Engine (`game/ai.py`)**: Integriert OpenAI APIs (GPT-Modelle), um qualitative Texte (Kampagnen) in quantitative Daten (Ratings) umzuwandeln. Enthält Validierungslogik für unleserliche Eingaben.
-* **Mechanics (`game/mechanics.py`)**: Enthält statische Funktionen zur Berechnung von Abstimmungsergebnissen.
+Komponenten
+ Frontend: Entwickelt mit Streamlit (Python). Bietet eine interaktive, webbasierte Benutzeroberfläche mit Custom CSS (Glassmorphism, Animationen).
+ Game Logic (game/state.py): Verwaltet den Spielzustand, die Ratings, Spieler und Rundenfortschritte. Implementiert das Zero-Sum-System.
+ AI Engine (game/ai.py): Integriert OpenAI APIs (GPT-Modelle), um qualitative Texte (Kampagnen) in quantitative Daten (Ratings) umzuwandeln. Enthält Validierungslogik für unleserliche Eingaben.
+ Mechanics (game/mechanics.py): Enthält statische Funktionen zur Berechnung von Abstimmungsergebnissen.
 
-### Datenverwaltung
-* **Events (`data/events.json`)**: Datenbank der politischen Krisen und Themen.
-* **Laws (`data/laws.json`)**: Umfangreiche Datenbank von Gesetzen mit Metadaten (Impact, Scandal Chance, International Reaction).
+Datenverwaltung
+ Events (data/events.json): Datenbank der politischen Krisen und Themen.
+ Laws (data/laws.json): Umfangreiche Datenbank von Gesetzen mit Metadaten (Impact, Scandal Chance, International Reaction).
 
-### Workflow
+Workflow
 1. Nutzer gibt Daten über Streamlit-Widgets ein.
-2. `GameState` aktualisiert die internen Variablen.
-3. `AIConsultant` sendet Prompts an OpenAI und verarbeitet die JSON-Antworten.
-4. Streamlit rendert die Oberfläche basierend auf dem aktuellen `step` im Session State.
+2. GameState aktualisiert die internen Variablen.
+3. AIConsultant sendet Prompts an OpenAI und verarbeitet die JSON-Antworten.
+4. Streamlit rendert die Oberfläche basierend auf dem aktuellen step im Session State.
